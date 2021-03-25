@@ -21,11 +21,10 @@ win_percent = rounds_won / rounds_played * 100
 loss_percent = rounds_lost / rounds_played * 100
 tie_percent = rounds_tied / rounds_played * 100
 
+print("*** Game Summary ***")
 print()
 for item in game_summary:
     print(item)
 print()
-
-print("*** Game Summary ***")
 print("Win: {}, ({:.0f}%) \nLoss: {}, ({:.0f}%) \nTie: {}, ({:.0f}%)"
       .format(rounds_won, win_percent, rounds_lost, loss_percent, rounds_tied, tie_percent))

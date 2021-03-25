@@ -37,16 +37,49 @@ def check_rounds():
                 continue
         return response
 
+
+def yes_no(question):
+    error = "Please answer yes or no."
+    valid = False
+    while not valid:
+        response = input(question).lower()
+
+        if response == "yes" or response == "y":
+            print("continue program")
+            return "yes"
+
+        elif response == "no" or response == "n":
+            return "no"
+
+        else:
+            print(error)
+
+
+def instructions():
+    print()
+    print("INSTRUCTIONS")
+    print("First, choose how many rounds you want to play.")
+    print("Then, make a choice of rock, paper or scissors "
+          "(you can type r / p / s if you don't want to type the full word.")
+    print("Paper beats rock, rock beats scissors, and scissors beats paper.")
+    print()
+
 # Main routine
 
 # Lists of valid responses
 
+game_summary = []
 yes_no_list = ["yes", "no"]
 rps_list = ["rock", "paper", "scissors", "xxx"]
 
 # Ask user if they have played before
 # If no, show instructions
+a = 1
+while a != 3:
 
+    show_instructions = yes_no("Have you played this game before? ")
+    if show_instructions == "no":
+        instructions()
 
 # Ask user for # of rounds then loop
 
@@ -72,34 +105,50 @@ while end_game == "":
     # get computer choice
     computer_choice = random.choice(rps_list[:-1])
     if user_choice == "xxx":
+        rounds_played -= 1
         break
     if rounds_played == round_amount:
         end_game = "e"
 
 # compare choices
     if user_choice == computer_choice:
-        result = "tied"
+        result = "TIED"
         rounds_tied += 1
     elif user_choice == "paper" and computer_choice == "rock":
-        result = "won"
+        result = "WON"
     elif user_choice == "rock" and computer_choice == "scissors":
-        result = "won"
+        result = "WON"
     elif user_choice == "scissors" and computer_choice == "paper":
-        result = "won"
+        result = "WON"
     else:
-        result = "lost"
+        result = "LOST"
         rounds_lost += 1
+    history = "Round {}: {}".format(rounds_played, result)
+    game_summary.append(history)
+    print()
     print("You chose {}.".format(user_choice))
     print("The computer chose {}.".format(computer_choice))
-    print("You {}".format(result))
+    print("*** You {} ***".format(result))
 
 # Ask user if they want to see their game history
 rounds_won = rounds_played - rounds_lost - rounds_tied
 
+win_percent = rounds_won / rounds_played * 100
+loss_percent = rounds_lost / rounds_played * 100
+tie_percent = rounds_tied / rounds_played * 100
+
 # End of game output
-print()
-print("***** End Game Summary *****")
-print("Won: {}  |  Lost: {}  |  Tied: {}".format(rounds_won, rounds_lost, rounds_tied))
+if rounds_played >= 10:
+    history_yesno = yes_no("Your game history has 10 rounds or over, would you like to see your results? ")
+    if history_yesno == "yes":
+        print()
+        for item in game_summary:
+            print(item)
+        print()
+        print("***** End Game Summary *****")
+        print()
+        print("Win: {}, ({:.0f}%) \nLoss: {}, ({:.0f}%) \nTie: {}, ({:.0f}%)"
+              .format(rounds_won, win_percent, rounds_lost, loss_percent, rounds_tied, tie_percent))
 
 # If yes, show game history
 print()

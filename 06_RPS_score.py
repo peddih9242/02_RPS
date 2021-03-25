@@ -13,11 +13,9 @@ for item in results:
 
     # Generate computer choice
 
-    result = item
-
-    if result == "tie":
+    if item == "tie":
         rounds_tied += 1
-    elif result == "loss":
+    elif item == "loss":
         rounds_lost += 1
 
 # calculate won
