@@ -29,11 +29,13 @@ def check_rounds():
                 # If invalid response, send back to the start of the loop
                 if response < 1:
                     print(round_error)
+                    print()
                     continue
 
             # If not an integer, send back to the start of the loop
             except ValueError:
                 print(round_error)
+                print()
                 continue
         return response
 
@@ -45,7 +47,6 @@ def yes_no(question):
         response = input(question).lower()
 
         if response == "yes" or response == "y":
-            print("continue program")
             return "yes"
 
         elif response == "no" or response == "n":
@@ -53,6 +54,7 @@ def yes_no(question):
 
         else:
             print(error)
+            print()
 
 
 def instructions():
@@ -74,12 +76,10 @@ rps_list = ["rock", "paper", "scissors", "xxx"]
 
 # Ask user if they have played before
 # If no, show instructions
-a = 1
-while a != 3:
 
-    show_instructions = yes_no("Have you played this game before? ")
-    if show_instructions == "no":
-        instructions()
+show_instructions = yes_no("Have you played this game before? ")
+if show_instructions == "no":
+    instructions()
 
 # Ask user for # of rounds then loop
 
@@ -138,17 +138,19 @@ loss_percent = rounds_lost / rounds_played * 100
 tie_percent = rounds_tied / rounds_played * 100
 
 # End of game output
+history_yesno = "yes"
 if rounds_played >= 10:
+    print()
     history_yesno = yes_no("Your game history has 10 rounds or over, would you like to see your results? ")
-    if history_yesno == "yes":
-        print()
-        for item in game_summary:
-            print(item)
-        print()
-        print("***** End Game Summary *****")
-        print()
-        print("Win: {}, ({:.0f}%) \nLoss: {}, ({:.0f}%) \nTie: {}, ({:.0f}%)"
-              .format(rounds_won, win_percent, rounds_lost, loss_percent, rounds_tied, tie_percent))
+if history_yesno == "yes":
+    print()
+    for item in game_summary:
+        print(item)
+    print()
+    print("***** End Game Summary *****")
+    print()
+    print("Win: {}, ({:.0f}%) \nLoss: {}, ({:.0f}%) \nTie: {}, ({:.0f}%)"
+          .format(rounds_won, win_percent, rounds_lost, loss_percent, rounds_tied, tie_percent))
 
 # If yes, show game history
 print()
