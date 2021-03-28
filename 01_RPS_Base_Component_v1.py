@@ -20,7 +20,7 @@ def choice_check(question, valid_list, error):
 def check_rounds():
     while True:
         response = input("How many rounds? (or press <enter> for infinite mode): ")
-        round_error = "Please type either an integer that is higher than 0."
+        round_error = "Please type an integer that is higher than 0 (or <enter> for infinite mode)."
         # If infinite mode isn't chosen, check for valid response (integer that is > 0)
         if response != "":
             try:
@@ -63,7 +63,10 @@ def instructions():
     print("First, choose how many rounds you want to play.")
     print("Then, make a choice of rock, paper or scissors "
           "(you can type r / p / s if you don't want to type the full word.")
-    print("Paper beats rock, rock beats scissors, and scissors beats paper.")
+    print("The rules are:")
+    print("Paper beats rock")
+    print("Rock beats scissors")
+    print("Scissors beats paper")
     print()
 
 # Main routine
@@ -132,26 +135,26 @@ while end_game == "":
 
 # Ask user if they want to see their game history
 rounds_won = rounds_played - rounds_lost - rounds_tied
+if rounds_played >= 1:
+    win_percent = rounds_won / rounds_played * 100
+    loss_percent = rounds_lost / rounds_played * 100
+    tie_percent = rounds_tied / rounds_played * 100
 
-win_percent = rounds_won / rounds_played * 100
-loss_percent = rounds_lost / rounds_played * 100
-tie_percent = rounds_tied / rounds_played * 100
+    # End of game output
+    history_yesno = "yes"
+    if rounds_played >= 10:
+        print()
+        history_yesno = yes_no("Your game history has 10 rounds or over, would you like to see your results? ")
+    if history_yesno == "yes":
+        print()
+        for item in game_summary:
+            print(item)
+        print()
+        print("***** End Game Summary *****")
+        print()
+        print("Win: {}, ({:.0f}%) \nLoss: {}, ({:.0f}%) \nTie: {}, ({:.0f}%)"
+              .format(rounds_won, win_percent, rounds_lost, loss_percent, rounds_tied, tie_percent))
 
-# End of game output
-history_yesno = "yes"
-if rounds_played >= 10:
+    # If yes, show game history
     print()
-    history_yesno = yes_no("Your game history has 10 rounds or over, would you like to see your results? ")
-if history_yesno == "yes":
-    print()
-    for item in game_summary:
-        print(item)
-    print()
-    print("***** End Game Summary *****")
-    print()
-    print("Win: {}, ({:.0f}%) \nLoss: {}, ({:.0f}%) \nTie: {}, ({:.0f}%)"
-          .format(rounds_won, win_percent, rounds_lost, loss_percent, rounds_tied, tie_percent))
-
-# If yes, show game history
-print()
-print("Thanks for playing")
+    print("Thanks for playing")
